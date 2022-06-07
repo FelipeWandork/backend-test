@@ -1,0 +1,12 @@
+{
+    "type": "postgres",
+    "port": 5432,
+    "host": "localhost",
+    "username": "admin",
+    "password": "admin2022",
+    "database": "Investments",
+    "migrations": ["./src/database/migrations/*.ts"],
+    "cli": {
+        "migrationsDir": "./src/database/migrations",
+    }
+}
