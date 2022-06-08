@@ -6,17 +6,18 @@ export const AppDataSource = new DataSource({
     host: "localhost",
     port: 5432,
     username: "admin",
-    password: "admin2022",
-    database: "Investments",
+    password: "admin",
+    database: "investments",
     synchronize: false,
     logging: false,
     entities: [],
     subscribers: [],
-    migrations: ["/src/database/migrations/*.ts"],
+    migrations: ["migrations/*.ts"],
 })
-
+/*
 export function createConnection(host = "database"): Promise<DataSource> {
     return AppDataSource.setOptions({ host }).initialize();
 }
   
-// export default AppDataSource
+export default AppDataSource
+*/
