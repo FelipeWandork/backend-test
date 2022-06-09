@@ -1,4 +1,6 @@
 import { DataSource } from "typeorm";
+import { Investment } from "./entity/Investment";
+import { CreateInvestment1654728724179 } from "./migrations/1654728724179-CreateInvestment";
 
 const AppDataSource = new DataSource({
     type: "postgres",
@@ -7,14 +9,10 @@ const AppDataSource = new DataSource({
     username: "admin",
     password: "admin",
     database: "investments",
-    synchronize: false,
-    entities: ["database/entity/*.ts"],
-    migrations: ["database/migrations/*.ts"],
-    migrationsTableName: "investments",
+    entities: [ Investment ],
+    migrations: [ CreateInvestment1654728724179 ],
 })
 
-export function createConnection(host = "localhost"): Promise<DataSource> {
-    return AppDataSource.setOptions({ host }).initialize();
-}
+AppDataSource.initialize();
 
 export default AppDataSource

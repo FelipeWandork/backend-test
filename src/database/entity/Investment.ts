@@ -2,18 +2,18 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("investments")
-class Investment {
+export class Investment {
     @PrimaryColumn("uuid")
-    id: string;
+    id: string
 
     @Column()
-    owner: string;
+    owner: string
 
     @Column("decimal")
-    amount: number;
+    amount: number
 
-    @CreateDateColumn()
-    date: Date;
+    @Column({ type: "timestamptz" })
+    date: Date
 
     constructor() {
         if(!this.id) {
@@ -21,5 +21,3 @@ class Investment {
         }
     }
 }
-
-export { Investment };

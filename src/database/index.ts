@@ -1,13 +1,20 @@
-import { createConnection, getConnectionOptions } from 'typeorm';
+import { DataSource } from "typeorm";
+import { Investment } from "./entity/Investment";
+import { CreateInvestment1654728724179 } from "./migrations/1654728724179-CreateInvestment";
 
-interface IOptions {
-  host: string;
+const AppDataSource = new DataSource({
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "admin",
+    password: "admin",
+    database: "investments",
+    entities: [ Investment ],
+    migrations: [ CreateInvestment1654728724179 ],
+})
+
+export function createConnection(host = "localhost"): Promise<DataSource> {
+    return AppDataSource.setOptions({ host }).initialize();
 }
 
-getConnectionOptions().then(options => {
-  const newOptions = options as IOptions;
-  newOptions.host = 'investments'; //Essa opção deverá ser EXATAMENTE o nome dado ao service do banco de dados
-  createConnection({
-    ...options,
-  });
-});
+export default AppDataSource
