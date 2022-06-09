@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
 
-@Entity("Investments")
-export default class Investment {
+@Entity("investments")
+class Investment {
     @PrimaryColumn("uuid")
     id: string;
 
@@ -11,6 +12,14 @@ export default class Investment {
     @Column("decimal")
     amount: number;
 
-    @Column("timestamp")
+    @CreateDateColumn()
     date: Date;
+
+    constructor() {
+        if(!this.id) {
+            this.id = uuidV4();
+        }
+    }
 }
+
+export { Investment };

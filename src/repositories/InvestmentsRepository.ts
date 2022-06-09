@@ -1,14 +1,36 @@
-import { Investment } from '../model/Investment';
+import { getRepository, Repository } from 'typeorm';
+import { Investment } from '../database/entity/Investment';
+import { ICreateInvestment } from "../interfaces/ICreateInvestment";
 
-class InvestmentsRepository {
+class InvestmentsRepository implements ICreateInvestment {
 
-    create({ owner, amount }: ICreateInvestment): void {
-        const investment = new Investment();
+    owner: string;
+    amount: number;
 
-        Object.assign(investment, {
+    private repository: Repository<Investment>;
+
+    constructor() {
+        this.repository = getRepository(Investment);
+    }
+
+    async create({ owner, amount }: ICreateInvestment): Promise<void> {
+        const investment = this.repository.create({
             owner,
-            amount
+            amount,
         });
+
+        await this.repository.save(investment);
+        
+    }
+
+    async list(): Promise<Investment[]> {
+        const investments = await this.repository.find();
+        return investments;
+    }
+
+    async findByName(owner: string): Promise<Investment> {
+        const investment = await this.repository.findOne({ owner });
+        return investment;
     }
 }
 
